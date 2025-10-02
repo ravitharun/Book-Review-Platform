@@ -1,10 +1,12 @@
 import React from "react";
 import { AiOutlineBook, AiOutlineStar, AiOutlineUser } from "react-icons/ai";
 import Footer from "./Footer";
+import Navbar from "../Navbar";
 
 function Home() {
   return (
     <>
+     <Navbar></Navbar>
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6">
         {/* Hero Section */}
         <section className="text-center max-w-3xl">
