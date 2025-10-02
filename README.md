@@ -41,11 +41,10 @@ This project is built using **React** for the frontend (UI phase) with a modular
 
 ## 📂 Frontend Structure Frontend
 
-<image src="![alt text](image.png)" >
+<img src="./image.png">
 
 ## 📂 Frontend Structure Backend
-
-<image src="![alt text](image-1.png)" >
+<img src="./image-1.png">
 
 ---
 
