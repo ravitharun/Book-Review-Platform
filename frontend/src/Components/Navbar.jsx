@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineHome, AiOutlineUser, AiOutlineBook, AiOutlineLogin } from "react-icons/ai";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -14,7 +15,6 @@ const Navbar = () => {
           <div className="flex-shrink-0 flex items-center">
             <h1 className="text-2xl font-bold text-blue-700">BookReview</h1>
           </div>
-
           {/* Desktop Links */}
           <div className="hidden md:flex space-x-6 items-center">
             <Link to="/" className="flex items-center text-gray-800 hover:text-blue-600 font-medium transition duration-200">
@@ -23,9 +23,12 @@ const Navbar = () => {
             <Link to="/books" className="flex items-center text-gray-800 hover:text-blue-600 font-medium transition duration-200">
               <AiOutlineBook className="mr-1 text-lg" /> Books
             </Link>
-            <a href="/profile" className="flex items-center text-gray-800 hover:text-blue-600 font-medium transition duration-200">
+            <Link to="/profile" className="flex items-center text-gray-800 hover:text-blue-600 font-medium transition duration-200">
               <AiOutlineUser className="mr-1 text-lg" /> Profile
-            </a>
+            </Link>
+            <Link to="/profile" className="flex items-center text-gray-800 hover:text-blue-600 font-medium transition duration-200">
+              <FaRegHeart className="mr-1 text-lg" /> My Favorites
+            </Link>
             <Link t0="/login" className="flex items-center text-gray-800 hover:text-blue-600 font-medium transition duration-200">
               <AiOutlineLogin className="mr-1 text-lg" /> Login
             </Link>
