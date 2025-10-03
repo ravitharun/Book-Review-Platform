@@ -1,11 +1,11 @@
 import React from "react";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white border-2 border-gray-300 rounded-xl shadow-xl overflow-hidden">
-        
         {/* Left - Image */}
         <div className="md:w-1/2 relative h-80 md:h-auto">
           <img
@@ -15,7 +15,9 @@ const Login = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="bg-white/30 backdrop-blur-md rounded-lg p-6 text-center max-w-xs">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back!</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Welcome Back!
+              </h1>
               <p className="text-gray-800 text-sm">
                 Discover and review your favorite books.
               </p>
@@ -32,7 +34,9 @@ const Login = () => {
           <form className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Email</label>
+              <label className="block text-gray-700 font-medium mb-1">
+                Email
+              </label>
               <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
                 <AiOutlineMail className="text-gray-400 mr-2" />
                 <input
@@ -45,7 +49,9 @@ const Login = () => {
 
             {/* Password */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Password</label>
+              <label className="block text-gray-700 font-medium mb-1">
+                Password
+              </label>
               <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
                 <AiOutlineLock className="text-gray-400 mr-2" />
                 <input
@@ -66,13 +72,16 @@ const Login = () => {
 
           <p className="mt-6 text-center text-gray-600 text-sm">
             Don't have an account?{" "}
-            <span className="text-blue-600 hover:underline cursor-pointer font-medium">
-              Sign Up
-            </span>
+            <Link to="/signup">
+              <span className="text-blue-600 hover:underline cursor-pointer font-medium">
+                Sign Up
+              </span>
+            </Link>
           </p>
         </div>
       </div>
     </div>
+    // </>
   );
 };
 

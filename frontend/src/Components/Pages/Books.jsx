@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "./Footer";
 import Navbar from "../Navbar";
 import { FaSearch, FaStar } from "react-icons/fa";
+import AddBook from "./AddBook";
 
 function Books() {
   return (
@@ -60,6 +61,9 @@ function Books() {
               </div>
             </div>
           </div>
+         <AddBook  />
+         <br />
+         <br />
 
           {/* Books Display */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   return (
@@ -92,9 +93,11 @@ const Signup = () => {
 
           <p className="mt-6 text-center text-gray-600 text-sm">
             Already have an account?{" "}
+            <Link to="/login">
             <span className="text-blue-600 hover:underline cursor-pointer font-medium">
               Login
             </span>
+            </Link>
           </p>
         </div>
       </div>
