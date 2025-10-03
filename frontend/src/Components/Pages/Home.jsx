@@ -324,13 +324,13 @@ function Home() {
           {zigZagSection(
             "Tips for Users",
             "Write honest reviews, follow readers with similar taste, explore new releases, participate in discussions, and track your reading stats for motivation and growth.",
-            "https://images.unsplash.com/photo-1581091215361-3a17d9d5d2f7?auto=format&fit=crop&w=800&q=80"
+            "https://thesocialmediamonthly.com/wp-content/uploads/2020/11/df453we.png"
           )}
 
           {zigZagSection(
             "Things to Keep in Mind",
             "Some book ratings may be subjective. The community is growing, so detailed reading stats or challenges are still improving. Not every book has feedback yet.",
-            "https://images.unsplash.com/photo-1563201517-6b5be8d1d9a4?auto=format&fit=crop&w=800&q=80",
+            "https://s26162.pcdn.co/wp-content/uploads/2023/11/6.png",
             true
           )}
         </div>
