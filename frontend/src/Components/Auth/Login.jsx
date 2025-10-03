@@ -1,13 +1,9 @@
-import React, { useContext } from "react";
+
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import SetTheme from "../Theme";
+
 
 const Login = () => {
-  const theme = useContext(SetTheme);
-
-  console.log(theme, "theme"); // "Dark"
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -34,7 +30,7 @@ const Login = () => {
         {/* Right - Form */}
         <div className="md:w-1/2 p-10 flex flex-col justify-center">
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
-            Login to Your Account - <p>Current Theme: {theme}</p>
+            Login to Your Account 
           </h2>
 
           <form className="space-y-4">

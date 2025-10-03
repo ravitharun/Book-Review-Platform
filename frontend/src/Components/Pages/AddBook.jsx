@@ -15,54 +15,80 @@ function AddBook({ onClose }) {
     <div className="relative">
       <button
         onClick={() => setShowModal(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
+        className="px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
       >
         Add New Book
       </button>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4" onClick={handleClose}>
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 overflow-auto"
+          onClick={handleClose}
+        >
           <div
-            className={`p-6 rounded-xl w-full max-w-md relative shadow-xl ${
-              theme==='Dark'?'bg-gray-800 text-white':'bg-white text-gray-900'
+            className={`p-8 rounded-2xl w-full max-w-lg relative shadow-2xl ${
+              theme === "Dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
             }`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={handleClose}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-200"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-200"
             >
-              <FaTimes size={18} />
+              <FaTimes size={22} />
             </button>
 
-            <h2 className="text-xl font-bold mb-4 text-center">Add a New Book</h2>
-            <form className="space-y-3">
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-2 py-1">
+            <h2 className="text-2xl font-bold mb-6 text-center">Add a New Book</h2>
+            <form className="space-y-4">
+              <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-3 py-3">
                 <FaBook className="text-gray-500" />
-                <input type="text" placeholder="Title" className="w-full outline-none text-sm bg-transparent text-current" />
+                <input
+                  type="text"
+                  placeholder="Title"
+                  className="w-full outline-none text-base bg-transparent text-current"
+                />
               </div>
 
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-2 py-1">
+              <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-3 py-3">
                 <FaUser className="text-gray-500" />
-                <input type="text" placeholder="Author" className="w-full outline-none text-sm bg-transparent text-current" />
+                <input
+                  type="text"
+                  placeholder="Author"
+                  className="w-full outline-none text-base bg-transparent text-current"
+                />
               </div>
 
-              <div className="flex items-start gap-2 border border-gray-300 rounded-lg px-2 py-1">
+              <div className="flex items-start gap-3 border border-gray-300 rounded-xl px-3 py-3">
                 <FaAlignLeft className="text-gray-500 mt-1" />
-                <textarea placeholder="Description" className="w-full outline-none resize-none text-sm bg-transparent text-current" rows={2}></textarea>
+                <textarea
+                  placeholder="Description"
+                  className="w-full outline-none resize-none text-base bg-transparent text-current"
+                  rows={3}
+                ></textarea>
               </div>
 
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-2 py-1">
+              <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-3 py-3">
                 <FaTag className="text-gray-500" />
-                <input type="text" placeholder="Genre" className="w-full outline-none text-sm bg-transparent text-current" />
+                <input
+                  type="text"
+                  placeholder="Genre"
+                  className="w-full outline-none text-base bg-transparent text-current"
+                />
               </div>
 
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-2 py-1">
+              <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-3 py-3">
                 <FaCalendarAlt className="text-gray-500" />
-                <input type="number" placeholder="Published Year" className="w-full outline-none text-sm bg-transparent text-current" />
+                <input
+                  type="number"
+                  placeholder="Published Year"
+                  className="w-full outline-none text-base bg-transparent text-current"
+                />
               </div>
 
-              <button type="submit" className="w-full bg-blue-600 text-white font-semibold py-1.5 rounded-lg hover:bg-blue-700 transition text-sm">
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition text-base"
+              >
                 Add Book
               </button>
             </form>
