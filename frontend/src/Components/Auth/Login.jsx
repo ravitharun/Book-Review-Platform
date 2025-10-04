@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import useAppNavigate from "../Route/useAppNavigate";
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const [Islogin, setIslogin] = useState(false);
   const [errors, setErrors] = useState({ email: false, password: false });
-
+  const navigate = useNavigate();
   useEffect(() => {
     emailRef.current.focus();
   }, []);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
@@ -25,13 +27,31 @@ const Login = () => {
       else passwordRef.current.focus();
     } else {
       setErrors({ email: false, password: false });
-      console.log("Calling API with:", { email, password });
-      // Reset inputs if needed
-      // emailRef.current.value = "";
-      // passwordRef.current.value = "";
+
+      const ValidData = await axios.get(
+        "http://localhost:3000/BookReview/Auth/Books/Login",
+        {
+          params: {
+            email,
+            password,
+          },
+        }
+      );
+      console.log(ValidData.data)
+      if (ValidData.data.AlertMessage == "Account Login sucessfully !") {
+        alert(ValidData.data.AlertMessage)
+        setIslogin((prev) => !prev);
+        localStorage.setItem("BookEmail_Ref", ValidData.data.message);
+        localStorage.setItem("BookUserToken_Ref", ValidData.data.Token);
+        // Reset inputs if needed
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+        navigate("/");
+      }
     }
   };
 
+  localStorage.setItem("BookIsUserLogin_Ref", Islogin);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       if (e.target === emailRef.current) passwordRef.current.focus();

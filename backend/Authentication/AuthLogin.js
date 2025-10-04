@@ -2,25 +2,47 @@ var express = require('express');
 var router = express.Router();
 const User = require('../bin/Database');
 const bcrypt = require('bcrypt');
-
+const jwt = require("jsonwebtoken");
 // these is useed to check the token is expry/not  
-const Middleware = () => {
+const Middleware = (req,res,next) => {
+
     console.log('hi i am Middleware')
+    next()
 }
 
 /* GET Login Creditails. */
-router.get("/Books/Login", async (req, res) => {
+router.get("/Books/Login",Middleware, async (req, res) => {
     try {
-        const { Email, Password } = req.query
-        if (!Email || !Password) {
-            return res.statusCode(404).json({ message: "Fill the required Details In the Form" })
+        const { email,
+            password } = req.query
+
+        if (!email || !password) {
+            return res.status(404).json({ message: "Fill the required Details In the Form" })
         }
+        // Checking the user is Created account or not
+        const IsCreatedUser = await User.findOne({ email })
+        if (!IsCreatedUser) {
+            return res.status(404).json({ message: "User Not Found!" })
+        }
+        const GetPassword = await bcrypt.compare(password, IsCreatedUser.password); // true
+ 
+        // if user Found return the emailand message :"account login done and ssedn the token!!!"
         // here we wll check the user data in the db if exits we will send the return statscode(200)==>msg:like login sucessfull !!
         // here if not Correct USer Login data we will send the msg:like (passowrd incorrect or email is incorrect)
+        if (GetPassword) {
+            const payload = { id: IsCreatedUser._id, email: IsCreatedUser.email };
+            const token = jwt.sign(payload, 'tharun2005R', { expiresIn: "1h" });
+          
+
+            return res.status(200).json({ message: email, Token: token, AlertMessage: "Account Login sucessfully !" })  // do NOT send password back
+        }
+
+
 
     }
     catch (err) {
-        return res.statusCode(500).json({ messsage: err.messsage })
+        console.error(err.message);  // correct spelling
+        return res.status(500).json({ message: err.message });
     }
 })
 // here the route is used for to get the user  data and vaildate the data and save into the db

@@ -1,7 +1,14 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { FaBook, FaUser, FaAlignLeft, FaTag, FaCalendarAlt, FaTimes } from "react-icons/fa";
+import {
+  FaBook,
+  FaUser,
+  FaAlignLeft,
+  FaTag,
+  FaCalendarAlt,
+  FaTimes,
+} from "react-icons/fa";
 import SetTheme from "../Theme";
-
+import BookEmail_Ref from "../GetLocalStorage/CheckAuth";
 function AddBook({ onClose }) {
   const { theme } = useContext(SetTheme);
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +35,18 @@ function AddBook({ onClose }) {
     else if (!Description.current.value) Description.current.focus();
     else if (!Genre.current.value) Genre.current.focus();
     else if (!PublishedYear.current.value) PublishedYear.current.focus();
-    else console.log("Calling API with book data...");
+    else {
+      const BookData = {
+        Title: Title.current.value,
+        Author: Author.current.value,
+        Description: Description.current.value,
+        PublishedYear: PublishedYear.current.value,
+        Genre: Genre.current.value,
+        Email: BookEmail_Ref,
+      };
+
+      console.log("Calling API with book data...", BookData);
+    }
   };
 
   const handleEnterFocus = (ev, nextRef) => {
@@ -54,7 +72,9 @@ function AddBook({ onClose }) {
         >
           <div
             className={`p-8 rounded-2xl w-full max-w-lg relative shadow-2xl ${
-              theme === "Dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+              theme === "Dark"
+                ? "bg-gray-900 text-white"
+                : "bg-white text-gray-900"
             }`}
             onClick={(e) => e.stopPropagation()}
           >
@@ -65,7 +85,9 @@ function AddBook({ onClose }) {
               <FaTimes size={22} />
             </button>
 
-            <h2 className="text-2xl font-bold mb-6 text-center">Add a New Book</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">
+              Add a New Book
+            </h2>
             <form className="space-y-4" onSubmit={Submit}>
               <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-3 py-3">
                 <FaBook className="text-gray-500" />
