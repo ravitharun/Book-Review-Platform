@@ -2,14 +2,15 @@ import React, { useRef, useState } from "react";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import NavigateRoute from "../Route/NavigateRoute";
+import useAppNavigate from "../Route/useAppNavigate";
+
 
 const Signup = () => {
   const Name = useRef("");
   const Email = useRef("");
   const Password = useRef("");
   const Confirmpassword = useRef("");
-
+  const navigate = useAppNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -33,12 +34,12 @@ const Signup = () => {
           ConfirmPassword: Confirmpassword.current.value,
         }
       );
-      
-      if(response.data.message=="Created a new account!!"){
-        alert(response.data.message)
+
+      if (response.data.message == "Created a new account!!") {
+        alert(response.data.message);
         setTimeout(() => {
-          NavigateRoute("/login")
-        }, 25000);
+          navigate("/login");
+        }, 2500);
       }
       // Optionally redirect to login page
     } catch (error) {
