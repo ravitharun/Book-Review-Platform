@@ -8,10 +8,12 @@ import axios from "axios";
 import { useState } from "react";
 import { BookStorage } from "../GetLocalStorage/CheckAuth";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import useAppNavigate from "../Route/useAppNavigate";
 
 function Books() {
   const { theme } = useContext(SetTheme);
   const [AllBooks, setBooks] = useState([]);
+  const navigate = useAppNavigate();
   useEffect(() => {
     const GetAllBooks = async () => {
       try {
@@ -44,16 +46,21 @@ function Books() {
   // delete the book
   const DeleteBook = async (id) => {
     try {
-      console.log(id)
-    const response = await axios.delete(
-      `http://localhost:3000/BookReview/deletebook/${id}`
-    );
-    console.log(response.data);
+      console.log(id);
+      const response = await axios.delete(
+        `http://localhost:3000/BookReview/deletebook/${id}`
+      );
+      console.log(response.data);
     } catch (err) {
       console.log(err.message);
     }
   };
-
+  const ReadMore = (BookInfo, imgurl) => {
+    navigate("/BooksDetails", {
+      state: BookInfo,
+    });
+    console.log(BookInfo, imgurl);
+  };
   return (
     <>
       <Navbar />
@@ -161,7 +168,15 @@ function Books() {
                   ))}
                   <span className="ml-2 text-sm text-gray-500">(4.0)</span>
                 </div>
-                <button className="mt-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">
+                <button
+                  className="mt-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                  onClick={() =>
+                    ReadMore(
+                      book,
+                      "https://tse1.mm.bing.net/th/id/OIP.-V-sQ--jzR8zQmW9z8pJzgHaFx?pid=Api&P=0&h=180"
+                    )
+                  }
+                >
                   Read More
                 </button>
               </div>
