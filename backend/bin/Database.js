@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.connect('mongodb://127.0.0.1:27017/bookReview', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 })
-.then(() => console.log("✅ MongoDB connected"))
-.catch((err) => console.error("❌ MongoDB connection error:", err));
+    .then(() => console.log("✅ MongoDB connected"))
+    .catch((err) => console.error("❌ MongoDB connection error:", err));
+    console.log("Mongo URI:", process.env.MONGO_URI);
+
 // Define schema
 const userSchema = new mongoose.Schema({
     name: {
@@ -16,7 +18,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true, // no duplicate emails
-        lowercase: true
     },
     password: {
         type: String,
@@ -27,9 +28,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 6
-    }
+    },
+    createdAt: { type: Date, default: Date.now } // 👈 Auto timestamp
 });
 
 // Export model
 const User = mongoose.model("User", userSchema);
-export default User;
+module.exports = User;

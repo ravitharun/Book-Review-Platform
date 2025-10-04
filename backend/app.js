@@ -32,6 +32,7 @@ app.use('/BookReview/HandelRouter', HandelBooksRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+require('dotenv').config(); // add at the top of your app.js or Database.js
 
 // error handler
 app.use(function (err, req, res, next) {
