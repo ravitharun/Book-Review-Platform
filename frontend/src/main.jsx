@@ -8,7 +8,6 @@ import Books from "./Components/Pages/Books.jsx";
 import BookDetails from "./Components/Pages/BookDetails.jsx";
 import Login from "./Components/Auth/Login.jsx";
 import Signup from "./Components/Auth/Signup.jsx";
-import Profile from "./Components/Pages/Profile.jsx";
 import BookFavorites from "./Components/Pages/BookFavorites.jsx";
 import SetTheme from "./Components/Theme.js";
 
@@ -21,8 +20,7 @@ function Main() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/BookFavorites" element={<BookFavorites />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/books" element={<Books />} />
           <Route path="/BooksDetails" element={<BookDetails />} />

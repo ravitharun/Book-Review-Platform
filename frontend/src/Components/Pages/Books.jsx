@@ -1,19 +1,43 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Footer from "./Footer";
 import Navbar from "../Navbar";
 import { FaSearch, FaStar } from "react-icons/fa";
 import AddBook from "./AddBook";
 import SetTheme from "../Theme";
+import axios from "axios";
+import { useState } from "react";
+import { BookStorage } from "../GetLocalStorage/CheckAuth";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 function Books() {
   const { theme } = useContext(SetTheme);
+  const [AllBooks, setBooks] = useState([]);
+  useEffect(() => {
+    const GetAllBooks = async () => {
+      try {
+        const GetBooks = await axios.get(
+          "http://localhost:3000/BookReview/Book/GetAllBooks"
+        );
+
+        setBooks(GetBooks.data.message);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    GetAllBooks();
+  }, []);
 
   return (
     <>
       <Navbar />
-      <div className={`${theme==='Dark'?'bg-gray-900 text-white':'bg-gray-100 text-gray-900'} min-h-screen py-12 px-4 mt-10`}>
+      <div
+        className={`${
+          theme === "Dark"
+            ? "bg-gray-900 text-white"
+            : "bg-gray-100 text-gray-900"
+        } min-h-screen py-12 px-4 mt-10`}
+      >
         <div className="max-w-7xl mx-auto">
-
           {/* Search & Filter Section */}
           <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-6 rounded-2xl shadow-xl mb-10">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
@@ -60,21 +84,53 @@ function Books() {
 
           {/* Books Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-            {[1,2,3,4,5,6].map((book, idx)=>(
-              <div key={idx} className={`p-6 rounded-2xl shadow-lg flex flex-col hover:shadow-xl transition ${theme==='Dark'?'bg-gray-800 text-white':'bg-white'}`}>
-                <div className="h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                  <span className="text-gray-500 text-sm">Book Cover</span>
+            {AllBooks.map((book, idx) => (
+              <div
+                key={idx}
+                className={`p-6 rounded-2xl shadow-lg flex flex-col hover:shadow-xl transition ${
+                  theme === "Dark" ? "bg-gray-800 text-white" : "bg-white"
+                }`}
+              >
+                <div className="h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
+                  <img
+                    src="https://tse1.mm.bing.net/th/id/OIP.-V-sQ--jzR8zQmW9z8pJzgHaFx?pid=Api&P=0&h=180"
+                    alt="Book Cover"
+                    className="w-full h-full object-cover"
+                  />
+                  <span className="absolute bottom-2 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+                    Book Cover
+                  </span>
                 </div>
-                <h3 className="text-lg font-bold">Book Title {idx+1}</h3>
-                <p className="text-sm mb-2">by Author Name</p>
-                <p className="text-sm mb-4">Short description goes here.</p>
+
+                <h3 className="text-lg font-bold">
+                  {book.Title} {idx + 1}
+                </h3>
+                <p className="text-sm mb-2">{book.Author}</p>
+                <p className="text-sm mb-4">{book.Description}</p>
+                {book.Email == BookStorage.getEmail() ? (
+                  <div className="flex space-x-3 mt-3">
+                    <button className="flex items-center gap-2 px-4 py-2 border-blue-500 hover:bg-blue-500  text-black rounded-lg shadow hover:opacity-90 transition">
+                      <FaEdit /> Edit
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:opacity-90 transition">
+                      <FaTrash /> Delete
+                    </button>
+                  </div>
+                ) : null}
                 <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i)=>(
-                    <FaStar key={i} className={`${i<4?'text-yellow-500':'text-gray-300'}`} />
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar
+                      key={i}
+                      className={`${
+                        i < 4 ? "text-yellow-500" : "text-gray-300"
+                      }`}
+                    />
                   ))}
                   <span className="ml-2 text-sm text-gray-500">(4.0)</span>
                 </div>
-                <button className="mt-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">Read More</button>
+                <button className="mt-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">
+                  Read More
+                </button>
               </div>
             ))}
           </div>
@@ -82,7 +138,7 @@ function Books() {
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
 export default Books;

@@ -7,11 +7,13 @@ import {
   FaCalendarAlt,
   FaTimes,
 } from "react-icons/fa";
+import axios from "axios";
 import SetTheme from "../Theme";
-import  { BookStorage } from "../GetLocalStorage/CheckAuth";
+import { BookStorage } from "../GetLocalStorage/CheckAuth";
 function AddBook({ onClose }) {
   const { theme } = useContext(SetTheme);
   const [showModal, setShowModal] = useState(false);
+  const [AllBooks, setBooks] = useState([]);
 
   const Title = useRef(null);
   const Author = useRef(null);
@@ -21,6 +23,18 @@ function AddBook({ onClose }) {
 
   useEffect(() => {
     if (Title.current) Title.current.focus();
+    const GetAllBooks = async () => {
+      try {
+        const GetBooks = await axios.get(
+          "http://localhost:3000/BookReview/Book/GetAllBooks"
+        );
+        console.log(GetBooks.data.message)
+        setBooks(GetBooks.data.message);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    GetAllBooks();
   }, []);
 
   const handleClose = () => {
@@ -28,7 +42,7 @@ function AddBook({ onClose }) {
     if (onClose) onClose();
   };
 
-  const Submit = (e) => {
+  const Submit = async (e) => {
     e.preventDefault();
     if (!Title.current.value) Title.current.focus();
     else if (!Author.current.value) Author.current.focus();
@@ -44,8 +58,16 @@ function AddBook({ onClose }) {
         Genre: Genre.current.value,
         Email: BookStorage.getEmail(),
       };
-
-      console.log("Calling API with book data...", BookData);
+      try {
+        const SaveBook = await axios.post(
+          "http://localhost:3000/BookReview/Book/AddBook",
+          { BookData }
+        );
+        console.log("Calling API with book data...", BookData);
+        console.log(SaveBook.data, "SaveBook");
+      } catch (err) {
+        console.log(err.message);
+      }
     }
   };
 

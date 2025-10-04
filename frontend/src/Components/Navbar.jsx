@@ -4,10 +4,12 @@ import {
   AiOutlineUser,
   AiOutlineBook,
   AiOutlineLogin,
+  AiOutlineLogout,
 } from "react-icons/ai";
 import { FaRegHeart, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SetTheme from "./Theme";
+import { BookStorage } from "./GetLocalStorage/CheckAuth";
 
 
 const Navbar = () => {
@@ -22,6 +24,7 @@ const Navbar = () => {
       className={`w-full ${
         theme === "Dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"
       } backdrop-blur-xl border border-white/30 shadow-md fixed top-0 left-0 z-50`}
+       
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
@@ -44,24 +47,24 @@ const Navbar = () => {
             >
               <AiOutlineBook className="mr-1" /> Books
             </Link>
-            <Link
-              to="/profile"
-              className="flex items-center hover:text-blue-600 font-medium"
-            >
-              <AiOutlineUser className="mr-1" /> Profile
-            </Link>
+        
             <Link
               to="/BookFavorites"
               className="flex items-center hover:text-blue-600 font-medium"
             >
               <FaRegHeart className="mr-1" /> Favorites
             </Link>
-            <Link
+            {BookStorage.getIsUserLogin?<Link
+              to="/logout"
+              className="flex items-center hover:text-blue-600 font-medium"
+            >
+              <AiOutlineLogout className="mr-1" /> Logout
+            </Link>:<Link
               to="/login"
               className="flex items-center hover:text-blue-600 font-medium"
             >
               <AiOutlineLogin className="mr-1" /> Login
-            </Link>
+            </Link>}
 
             {/* Theme Dropdown */}
             <div className="relative">
@@ -140,12 +143,7 @@ const Navbar = () => {
             >
               <AiOutlineBook className="mr-2" /> Books
             </Link>
-            <Link
-              to="/profile"
-              className="block px-4 py-3 hover:bg-white/40 flex items-center rounded-md"
-            >
-              <AiOutlineUser className="mr-2" /> Profile
-            </Link>
+         
             <Link
               to="/BookFavorites"
               className="block px-4 py-3 hover:bg-white/40 flex items-center rounded-md"

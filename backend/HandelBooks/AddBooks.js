@@ -1,28 +1,42 @@
 var express = require('express');
+const { Book } = require('../bin/Database');
 var router = express.Router();
 
 // these route Is used to get the Book Data
-router.get("/Book/Add", async (req, res) => {
+router.post("/Book/AddBook", async (req, res) => {
   try {
-    const { Tittle, Description, Genre, Author, PublishYear } = req.query
-    if (!Tittle || !Description || !Genre || !Author || !PublishYear) {
+    const { BookData } = req.body
+    console.log(BookData, "BookData Adding into the Db")
+    if (!BookData.Title || !BookData.Description || !BookData.Genre || !BookData.Author || !BookData.PublishedYear) {
       return res.json({ message: "Fill the required Detils in the form" })
     }
     // save into the DB
+    const saveBook = new Book({
+      Title: BookData.Title,
+      Author: BookData.Author,
+      Description: BookData.Description,
+      PublishedYear: Number(BookData.PublishedYear),
+      Genre: BookData.Genre,
+      Email: BookData.Email,
 
+    })
+    await saveBook.save()
+    return res.status(200).json({ message: "The Book Is Added " })
   } catch (error) {
-    return res.statusCode(500).json({ message: error.message })
+    console.log(error.message)
+    return res.status(500).json({ message: error.message })
   }
 })
 
 // In these route we will get the all books with review also
-router.get("Book/GetAllBooks", async (req, res) => {
+router.get("/Book/GetAllBooks", async (req, res) => {
   try {
     // In these route we will get the all booksn From the DB with review also and return statcode(200)==>{message:BooksAll}  
-
+    const GetBooks = await Book.find({})
+    res.json({ message: GetBooks })
   }
   catch (err) {
-    return res.statusCode(500).json({ message: err.message })
+    return res.status(500).json({ message: err.message })
   }
 })
 
@@ -31,11 +45,11 @@ router.put("/Books/UpdateBook/:Bookid", async (req, res) => {
   try {
     const { BookId } = req.query
     if (!BookId) {
-      return res.statusCode(404).json({ message: "BookId is not Found.." })
+      return res.status(404).json({ message: "BookId is not Found.." })
     }
-    // here we will adding the dbquery to update  the book based on the uinque -->(Bookid) if Updste sucess return res.stcode(200)=>updated the book if not statuscode(404)===>'some thing went wrong'
+    // here we will adding the dbquery to update  the book based on the uinque -->(Bookid) if Updste sucess return res.stcode(200)=>updated the book if not status(404)===>'some thing went wrong'
   } catch (error) {
-    return res.statusCode(500).json({ message: error.message })
+    return res.status(500).json({ message: error.message })
   }
 })
 
@@ -48,11 +62,11 @@ router.delete("/Books/DeleteBook/:Bookid", async (req, res) => {
   try {
     const { BookId } = req.query
     if (!BookId) {
-      return res.statusCode(404).json({ message: "BookId is not Found.." })
+      return res.status(404).json({ message: "BookId is not Found.." })
     }
-    // here we will adding the dbquery to delete the book based on the uinque if delete sucess return res.stcode(200)=>removed the book if not statuscode(404)===>'some thing went wrong'
+    // here we will adding the dbquery to delete the book based on the uinque if delete sucess return res.stcode(200)=>removed the book if not status(404)===>'some thing went wrong'
   } catch (error) {
-    return res.statusCode(500).json({ message: error.message })
+    return res.status(500).json({ message: error.message })
   }
 })
 

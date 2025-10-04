@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../bin/Database');
+const {User} = require('../bin/Database');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 // these is useed to check the token is expry/not  
