@@ -13,7 +13,7 @@ import { BookStorage } from "../GetLocalStorage/CheckAuth";
 function AddBook({ onClose }) {
   const { theme } = useContext(SetTheme);
   const [showModal, setShowModal] = useState(false);
-  const [AllBooks, setBooks] = useState([]);
+
 
   const Title = useRef(null);
   const Author = useRef(null);
@@ -60,7 +60,7 @@ function AddBook({ onClose }) {
       };
       try {
         const SaveBook = await axios.post(
-          "http://localhost:3000/BookReview/Book/AddBook",
+          "http://localhost:3000/BookReview/AddBook",
           { BookData }
         );
         console.log("Calling API with book data...", BookData);

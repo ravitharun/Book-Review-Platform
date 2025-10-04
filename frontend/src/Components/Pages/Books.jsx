@@ -27,6 +27,33 @@ function Books() {
     GetAllBooks();
   }, []);
 
+  // GetEditBook the book
+  const GetEditBook = async (id) => {
+    try {
+      const Edit = await axios.put(
+        "http://localhost:3000/BookReview/UpdateBook",
+        {
+          BookId: id,
+        }
+      );
+      console.log(id);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  // delete the book
+  const DeleteBook = async (id) => {
+    try {
+      console.log(id)
+    const response = await axios.delete(
+      `http://localhost:3000/BookReview/deletebook/${id}`
+    );
+    console.log(response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -109,10 +136,16 @@ function Books() {
                 <p className="text-sm mb-4">{book.Description}</p>
                 {book.Email == BookStorage.getEmail() ? (
                   <div className="flex space-x-3 mt-3">
-                    <button className="flex items-center gap-2 px-4 py-2 border-blue-500 hover:bg-blue-500  text-black rounded-lg shadow hover:opacity-90 transition">
+                    <button
+                      className="flex items-center gap-2 px-4 py-2 border-blue-500 hover:bg-blue-500  text-black rounded-lg shadow hover:opacity-90 transition"
+                      onClick={() => GetEditBook(book._id)}
+                    >
                       <FaEdit /> Edit
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:opacity-90 transition">
+                    <button
+                      className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:opacity-90 transition"
+                      onClick={() => DeleteBook(book._id)}
+                    >
                       <FaTrash /> Delete
                     </button>
                   </div>

@@ -41,9 +41,10 @@ router.get("/Book/GetAllBooks", async (req, res) => {
 })
 
 // in these route we will delete the  Books based on Id
-router.put("/Books/UpdateBook/:Bookid", async (req, res) => {
+router.put("/UpdateBook", async (req, res) => {
   try {
-    const { BookId } = req.query
+    const { BookId } = req.body
+    console.log(BookId)
     if (!BookId) {
       return res.status(404).json({ message: "BookId is not Found.." })
     }
@@ -55,15 +56,20 @@ router.put("/Books/UpdateBook/:Bookid", async (req, res) => {
 
 
 
-
-
 // in these route we will Update the  Books based on Id
-router.delete("/Books/DeleteBook/:Bookid", async (req, res) => {
+router.delete("/deletebook/:id", async (req, res) => {
   try {
-    const { BookId } = req.query
-    if (!BookId) {
+    const id = req.params.id
+    console.log(id);
+
+    if (!id) {
+      console.log('hi')
       return res.status(404).json({ message: "BookId is not Found.." })
     }
+
+    const DeleteBook = await Book.findByIdAndDelete({ _id: id })
+    console.log(DeleteBook)
+    return res.status(200).json({ message: "The book is deleted" })
     // here we will adding the dbquery to delete the book based on the uinque if delete sucess return res.stcode(200)=>removed the book if not status(404)===>'some thing went wrong'
   } catch (error) {
     return res.status(500).json({ message: error.message })
