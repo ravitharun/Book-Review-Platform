@@ -8,7 +8,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import SetTheme from "../Theme";
-import BookEmail_Ref from "../GetLocalStorage/CheckAuth";
+import  { BookStorage } from "../GetLocalStorage/CheckAuth";
 function AddBook({ onClose }) {
   const { theme } = useContext(SetTheme);
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +42,7 @@ function AddBook({ onClose }) {
         Description: Description.current.value,
         PublishedYear: PublishedYear.current.value,
         Genre: Genre.current.value,
-        Email: BookEmail_Ref,
+        Email: BookStorage.getEmail(),
       };
 
       console.log("Calling API with book data...", BookData);
