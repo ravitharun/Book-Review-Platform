@@ -33,9 +33,11 @@ const userSchema = new mongoose.Schema({
 });
 const ReviewSchema = new mongoose.Schema(
     {
-        reviewer: { type: String, required: true }, // name or email
-        comment: { type: String, required: true },
-        rating: { type: Number, min: 1, max: 5 }, // optional rating
+        reviewer: { type: String, required: true }, // name 
+        comment: { type: String, required: true },      //comment
+        rating: { type: Number, min: 1, max: 5, default: "1" }, // optional rating
+        Useremail: { type: String, required: true }, // Useremail 
+        BookID: { type: String, required: true }, // BookID
     },
     { timestamps: true }
 );

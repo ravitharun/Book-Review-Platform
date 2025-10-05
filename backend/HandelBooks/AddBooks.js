@@ -77,4 +77,48 @@ router.delete("/deletebook/:id", async (req, res) => {
 })
 
 
+router.post("/newreviews", async (req, res) => {
+  try {
+    const { review } = req.body;
+    console.log(review, "review");
+
+    // validation
+    if (!review.name || !review.comment) {
+      return res.status(400).json({
+        message: "Please fill all required fields for the review",
+      });
+    }
+
+    // find book
+    const book = await Book.findById(review.bookId);
+    if (!book) return res.status(404).json({ message: "Book not found" });
+
+    // create new review
+    const newReview = {
+      reviewer: review.name,
+      comment: review.comment,
+      rating: review.stars,
+      Useremail: review.Useremail,
+      BookID: review.bookId,
+      date: new Date(),
+    };
+    console.log(newReview, 'newReview')
+    // push to book reviews array
+    book.Reviews.push(newReview);
+    await book.save();
+
+    res.status(201).json({
+      message: "Review added successfully",
+      book,
+    });
+  } catch (error) {
+    console.error("Error adding review:", error.message);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+
 module.exports = router;
