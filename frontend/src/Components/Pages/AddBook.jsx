@@ -28,7 +28,7 @@ function AddBook({ onClose }) {
         const GetBooks = await axios.get(
           "http://localhost:3000/BookReview/Book/GetAllBooks"
         );
-        console.log(GetBooks.data.message)
+      
         setBooks(GetBooks.data.message);
       } catch (err) {
         console.log(err.message);

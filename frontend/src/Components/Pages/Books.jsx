@@ -7,7 +7,7 @@ import SetTheme from "../Theme";
 import axios from "axios";
 import { useState } from "react";
 import { BookStorage } from "../GetLocalStorage/CheckAuth";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaHeart } from "react-icons/fa";
 import useAppNavigate from "../Route/useAppNavigate";
 
 function Books() {
@@ -60,6 +60,23 @@ function Books() {
       state: BookInfo,
     });
     console.log(BookInfo, imgurl);
+  };
+  const AddFav = async (favBookId) => {
+    try {
+      const AddFav = {
+        Favbookid: favBookId,
+        UserEf_eail: BookStorage.getEmail(),
+      };
+      console.log(favBookId, "adding into  the fav section sooon.... ", AddFav);
+      // const FavResponse = await axios.post(
+      //   "http://localhost:3000/Bookreviews/Addfav",
+      //   {
+      //     Favbookid: favBookId,
+      //   }
+      // );
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   return (
     <>
@@ -121,11 +138,19 @@ function Books() {
             {AllBooks.map((book, idx) => (
               <div
                 key={idx}
-                className={`p-6 rounded-2xl shadow-lg flex flex-col hover:shadow-xl transition ${
+                className={`p-6 rounded-2xl shadow-lg flex flex-col relative hover:shadow-xl transition ${
                   theme === "Dark" ? "bg-gray-800 text-white" : "bg-white"
                 }`}
               >
-                <div className="h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
+                {/* Love Icon */}
+                <button
+                  className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition text-2xl md:text-xl z-20"
+                  onClick={() => AddFav(book._id)}
+                >
+                  <FaHeart />
+                </button>
+
+                <div className="h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative z-10">
                   <img
                     src="https://tse1.mm.bing.net/th/id/OIP.-V-sQ--jzR8zQmW9z8pJzgHaFx?pid=Api&P=0&h=180"
                     alt="Book Cover"
@@ -141,10 +166,11 @@ function Books() {
                 </h3>
                 <p className="text-sm mb-2">{book.Author}</p>
                 <p className="text-sm mb-4">{book.Description}</p>
-                {book.Email == BookStorage.getEmail() ? (
+
+                {book.Email === BookStorage.getEmail() ? (
                   <div className="flex space-x-3 mt-3">
                     <button
-                      className="flex items-center gap-2 px-4 py-2 border-blue-500 hover:bg-blue-500  text-black rounded-lg shadow hover:opacity-90 transition"
+                      className="flex items-center gap-2 px-4 py-2 border-blue-500 hover:bg-blue-500 text-black rounded-lg shadow hover:opacity-90 transition"
                       onClick={() => GetEditBook(book._id)}
                     >
                       <FaEdit /> Edit
@@ -157,6 +183,7 @@ function Books() {
                     </button>
                   </div>
                 ) : null}
+
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
                     <FaStar
@@ -168,6 +195,7 @@ function Books() {
                   ))}
                   <span className="ml-2 text-sm text-gray-500">(4.0)</span>
                 </div>
+
                 <button
                   className="mt-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
                   onClick={() =>

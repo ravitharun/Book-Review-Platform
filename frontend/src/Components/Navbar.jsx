@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import SetTheme from "./Theme";
 import { BookStorage } from "./GetLocalStorage/CheckAuth";
 
-
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
@@ -24,14 +23,15 @@ const Navbar = () => {
       className={`w-full ${
         theme === "Dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"
       } backdrop-blur-xl border border-white/30 shadow-md fixed top-0 left-0 z-50`}
-       
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <h1 className="text-2xl font-bold text-blue-700">BookReview</h1>
-          </div>
+          <Link to="/">
+            <div className="flex-shrink-0 flex items-center cursor-pointer">
+              <h1 className="text-2xl font-bold text-blue-700">BookReview</h1>
+            </div>
+          </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex space-x-6 items-center">
@@ -47,24 +47,28 @@ const Navbar = () => {
             >
               <AiOutlineBook className="mr-1" /> Books
             </Link>
-        
+
             <Link
               to="/BookFavorites"
               className="flex items-center hover:text-blue-600 font-medium"
             >
               <FaRegHeart className="mr-1" /> Favorites
             </Link>
-            {BookStorage.getIsUserLogin?<Link
-              to="/logout"
-              className="flex items-center hover:text-blue-600 font-medium"
-            >
-              <AiOutlineLogout className="mr-1" /> Logout
-            </Link>:<Link
-              to="/login"
-              className="flex items-center hover:text-blue-600 font-medium"
-            >
-              <AiOutlineLogin className="mr-1" /> Login
-            </Link>}
+            {BookStorage.getIsUserLogin ? (
+              <Link
+                to="/logout"
+                className="flex items-center hover:text-blue-600 font-medium"
+              >
+                <AiOutlineLogout className="mr-1" /> Logout
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="flex items-center hover:text-blue-600 font-medium"
+              >
+                <AiOutlineLogin className="mr-1" /> Login
+              </Link>
+            )}
 
             {/* Theme Dropdown */}
             <div className="relative">
@@ -128,7 +132,9 @@ const Navbar = () => {
         {mobileOpen && (
           <div
             className={`md:hidden mt-2 rounded-xl ${
-              theme === "Dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"
+              theme === "Dark"
+                ? "bg-gray-900 text-white"
+                : "bg-white text-gray-800"
             } backdrop-blur-xl border border-white/30 shadow-lg`}
           >
             <Link
@@ -143,7 +149,7 @@ const Navbar = () => {
             >
               <AiOutlineBook className="mr-2" /> Books
             </Link>
-         
+
             <Link
               to="/BookFavorites"
               className="block px-4 py-3 hover:bg-white/40 flex items-center rounded-md"
