@@ -39,51 +39,67 @@ This project is built using **React** for the frontend (UI phase) with a modular
 
 ---
 
-## 📂 Frontend Structure Frontend
+## 📂 Frontend Structure
 
-<img src="./image.png">
+<img src="./image.png" alt="Frontend Structure" />
 
-## 📂 Frontend Structure Backend
+## 📂 Backend Structure
 
-<img src="./image-1.png">
+<img src="./image-1.png" alt="Backend Structure" />
 
 ---
 
 ## 🛠️ Technologies Used
 
 - **React** – Frontend library for building UI
-- **React Router DOM** – For routing and navigation
-- **Axios** – For future API integration
+- **React Router DOM** – Routing and navigation
+- **Axios** – For API integration
 - **TailwindCSS / Bootstrap** – Styling and responsive design
 - **React Toastify** – Notifications and alerts
 - **React Icons** – Icons for buttons and navigation
 
 ---
 
-## ⚡ Future Enhancements (Next Phase)
+## ⚡ API Endpoints
 
-- Connect frontend with **Node.js + Express backend**
-- Implement **MongoDB database** with schemas for User, Book, and Review
-- Add **JWT authentication** and protected routes
-- Enable **CRUD operations** for books and reviews
-- Dynamic **average rating calculation** and **pagination from API**
-- Bonus: Search, filter, sorting, dark/light mode, and charts
+### Authentication APIs
+
+| Method | Endpoint                       | Description               | Payload / Query                              |
+| ------ | ------------------------------ | ------------------------- | -------------------------------------------- |
+| POST   | `/BookReview/Auth/Book/SignUp` | Create a new user account | `{ Name, Email, passowrd, ConfirmPassword }` |
+| GET    | `/BookReview/Auth/Books/Login` | Login user                | Query: `?email=example&password=example`     |
+
+---
+
+### Books APIs
+
+| Method | Endpoint                                      | Description                  | Payload / Notes                                                             |
+| ------ | --------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------- |
+| POST   | `/BookReview/Book/AddBook`                    | Add a new book               | `{ BookData: { Title, Author, Description, Genre, PublishedYear, Email } }` |
+| GET    | `/BookReview/Book/GetAllBooks`                | Get all books (with reviews) | No payload                                                                  |
+| PUT    | `/BookReview/UpdateBook`                      | Update book details by ID    | `{ BookId, updatedFields }`                                                 |
+| DELETE | `/BookReview/deletebook/:id`                  | Delete a book by ID          | URL param: `id`                                                             |
+| POST   | `/BookReview/newreviews`                      | Add a review for a book      | `{ review: { name, comment, stars, Useremail, bookId } }`                   |
+| DELETE | `/BookReview/deletereview/:bookid/:RefBookid` | Delete a review from a book  | URL params: `bookid` (review id), `RefBookid` (book id)                     |
 
 ---
 
-## 🗺️ UI-Only Roadmap (Current Phase)
+### Example Request Payloads
 
-| Phase          | Tasks Completed                                                              | Next Steps                           |
-| -------------- | ---------------------------------------------------------------------------- | ------------------------------------ |
-| Authentication | Signup & Login components created                                            | Connect to backend API               |
-| Pages          | Home, BookDetails, AddBook, Profile pages created                            | Populate dynamic data from backend   |
-| Components     | Navbar, BookCard, ReviewItem, StarRating, Pagination, ProtectedRoute created | Refine styling and responsive design |
-| Styling        | TailwindCSS/Bootstrap integrated                                             | Add notifications & icons            |
-| Routing        | React Router configured                                                      | Protect routes & handle redirects    |
+**Add Book**
 
-> This roadmap helps track **what’s done** and **what remains** for full functionality.
+```json
+{
+  "BookData": {
+    "Title": "Atomic Habits",
+    "Author": "James Clear",
+    "Description": "A book about habits",
+    "Genre": "Self-help",
+    "PublishedYear": 2018,
+    "Email": "user@example.com"
+  }
+}
 
----
 
 ## 📌 Contact
 
@@ -92,3 +108,4 @@ This project is built using **React** for the frontend (UI phase) with a modular
 - GitHub: [ravitharun](https://github.com/ravitharun)
 - Email: tharunravi672@gmail.com
 - Location: Bangalore, India
+```
