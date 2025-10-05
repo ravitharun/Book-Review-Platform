@@ -119,6 +119,29 @@ router.post("/newreviews", async (req, res) => {
     });
   }
 });
+// /deletereview/${bookid}
+router.delete('/deletereview/:bookid/:RefBookid', async (req, res) => {
+  try {
+    const bookid = req.params.bookid
+    const RefBookid = req.params.RefBookid
+    console.log(bookid)
+    console.log(RefBookid)
+    if (!bookid) return res.status(404).json({ message: "Book not found" });
+    const updatedBook = await Book.findByIdAndUpdate(
+      RefBookid,
+      { $pull: { Reviews: { _id: bookid } } },
+      { new: true } // return the updated document
+    );
+    // console.log(deleterevew, 'deleterevew   delete ')
 
+    res.status(201).json({
+      message: "Review is Deleted successfully",
+    });
+  }
+  catch (err) {
+    console.log(err.message)
+    return res.status(500).json({ message: "internal server error" })
+  }
+})
 
 module.exports = router;

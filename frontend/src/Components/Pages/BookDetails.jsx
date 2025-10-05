@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import Navbar from "../Navbar";
 import Footer from "./Footer";
-import { FaStar, FaCartPlus } from "react-icons/fa";
+import { FaStar, FaCartPlus, FaEdit, FaTrash } from "react-icons/fa";
 import SetTheme from "../Theme";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +16,7 @@ function BookDetails() {
     comment: "",
     stars: 0,
   });
-  console.log(book.Reviews, "book");
+
   if (!book) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -41,14 +41,28 @@ function BookDetails() {
         review: review,
       }
     );
-    console.log(Addreview.data.message, "Addreview");
+    if(Addreview.data.message=='Review added successfully'){
+      return alert(Addreview.data.message)
+    }
     setReviews([review, ...reviews]);
     setNewReview({ name: "", comment: "", stars: 0 });
   };
-  const HandelDelete = (bookid) => {
-    console.log("bookid to  delete", bookid);
+  const HandelDelete = async (bookid, RefBookid) => {
+    try {
+      console.log({ bookid, RefBookid });
+
+      const Deleterev = await axios.delete(
+        `http://localhost:3000/BookReview/deletereview/${bookid}/${RefBookid}`
+      );
+      if (Deleterev.data.message == "Review is Deleted successfully") {
+        alert("Review is Deleted successfully");
+      }
+    } catch (Err) {
+      console.log(Err.message);
+    }
   };
   const HandelEdit = (bookid) => {
+    alert("adding soon");
     console.log("bookid to  EditS", bookid);
   };
   return (
@@ -120,7 +134,9 @@ function BookDetails() {
             theme === "Dark" ? "bg-gray-800" : "bg-white"
           }`}
         >
-          <h2 className="text-2xl font-semibold mb-4">Customer Reviews</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            Customer Reviews ({book.Reviews.length})
+          </h2>
 
           {/* Existing Reviews */}
           <div className="space-y-4 max-h-80 overflow-y-auto mb-6">
@@ -147,14 +163,23 @@ function BookDetails() {
                       ))}
                       {r.Useremail == BookStorage.getEmail() && (
                         <>
-                          <button onClick={() => HandelEdit(r._id)}>
-                            Edit
-                          </button>
-                          <br />
-                          <br />
-                          <button onClick={() => HandelDelete(r._id)}>
-                            Delte
-                          </button>
+                          <div className="flex space-x-3 mt-3">
+                            <button
+                              onClick={() => HandelEdit(r._id, r.BookID)}
+                              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-500 text-white shadow-md hover:scale-105 transition-transform duration-200"
+                            >
+                              <FaEdit className="text-white" />
+                              Edit
+                            </button>
+
+                            <button
+                              onClick={() => HandelDelete(r._id, r.BookID)}
+                              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500 text-white shadow-md hover:scale-105 transition-transform duration-200"
+                            >
+                              <FaTrash className="text-white" />
+                              Delete
+                            </button>
+                          </div>
                         </>
                       )}
                     </div>
