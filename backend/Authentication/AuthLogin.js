@@ -1,17 +1,17 @@
 var express = require('express');
 var router = express.Router();
-const {User} = require('../bin/Database');
+const { User } = require('../bin/Database');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 // these is useed to check the token is expry/not  
-const Middleware = (req,res,next) => {
+const Middleware = (req, res, next) => {
 
     console.log('hi i am Middleware')
     next()
 }
 
 /* GET Login Creditails. */
-router.get("/Books/Login",Middleware, async (req, res) => {
+router.get("/Books/Login", Middleware, async (req, res) => {
     try {
         const { email,
             password } = req.query
@@ -25,14 +25,14 @@ router.get("/Books/Login",Middleware, async (req, res) => {
             return res.status(404).json({ message: "User Not Found!" })
         }
         const GetPassword = await bcrypt.compare(password, IsCreatedUser.password); // true
- 
+
         // if user Found return the emailand message :"account login done and ssedn the token!!!"
         // here we wll check the user data in the db if exits we will send the return statscode(200)==>msg:like login sucessfull !!
         // here if not Correct USer Login data we will send the msg:like (passowrd incorrect or email is incorrect)
         if (GetPassword) {
             const payload = { id: IsCreatedUser._id, email: IsCreatedUser.email };
             const token = jwt.sign(payload, 'tharun2005R', { expiresIn: "1h" });
-          
+
 
             return res.status(200).json({ message: email, Token: token, AlertMessage: "Account Login sucessfully !" })  // do NOT send password back
         }
@@ -52,6 +52,14 @@ router.post("/Book/SignUp", async (req, res) => {
         const { Name, Email, passowrd, ConfirmPassword } = req.body;
         console.log({ Name, Email, passowrd, ConfirmPassword })
         // validate the data if is it is empty string return the alert message :fill the form
+
+        // if(Email)
+        const findeuser_exits = await User.findOne({
+            email: Email
+        })
+        if (!findeuser_exits) {
+            return res.status(404).json({ message: "User already exits Please Login" })
+        }
         if (!Name || !Email || !passowrd || !ConfirmPassword) {
             return res.status(404).json({ message: "fill the reuird form details" })
         }

@@ -33,6 +33,7 @@ router.get("/Book/GetAllBooks", async (req, res) => {
   try {
     // In these route we will get the all booksn From the DB with review also and return statcode(200)==>{message:BooksAll}  
     const GetBooks = await Book.find({})
+    console.log(GetBooks,'GetBooks')
     res.json({ message: GetBooks })
   }
   catch (err) {
