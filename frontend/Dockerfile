@@ -3,15 +3,15 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package.json and install deps
+# Copy package.json first to cache installs
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the project
+# Copy all code
 COPY . .
 
-# Expose port for Vite dev server
+# Expose Vite port
 EXPOSE 5173
 
-# Start dev server with host flag
+# Start Vite dev server
 CMD ["npm", "run", "dev", "--", "--host"]
