@@ -1,4 +1,4 @@
-# Book Review Platform – MERN Stack Assignment (UI Phase)
+# Book Review Platform – MERN Stack Assignment (UI phase)
 
 [GitHub Repository](https://github.com/ravitharun/Book-Review-Platform.git)
 
